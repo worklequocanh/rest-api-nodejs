@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 const authRoutes = require('./routes/auth.routes');
 const taskRoutes = require('./routes/task.routes');
 const errorHandler = require('./middlewares/error.middleware');
@@ -17,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 // Routes
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 
