@@ -10,6 +10,9 @@ const migrate = async () => {
   
   const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    }
   });
 
   const filePath = path.join(__dirname, '../migrations/001_initial_schema.sql');
