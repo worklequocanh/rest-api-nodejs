@@ -14,6 +14,10 @@ const options = {
     },
     servers: [
       {
+        url: 'https://rest-api-nodejs-6gol.onrender.com',
+        description: 'Production server (Render)',
+      },
+      {
         url: 'http://localhost:3000',
         description: 'Development server',
       },
