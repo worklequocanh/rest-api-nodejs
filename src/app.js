@@ -8,6 +8,7 @@ const swaggerSpec = require('./config/swagger');
 const authRoutes = require('./routes/auth.routes');
 const taskRoutes = require('./routes/task.routes');
 const errorHandler = require('./middlewares/error.middleware');
+const { errorResponse } = require('./utils/response');
 
 const app = express();
 
