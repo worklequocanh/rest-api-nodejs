@@ -3,7 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const { errorResponse } = require('./utils/response');
+const authRoutes = require('./routes/auth.routes');
+const taskRoutes = require('./routes/task.routes');
+const errorHandler = require('./middlewares/error.middleware');
 
 const app = express();
 
@@ -14,14 +16,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/tasks', taskRoutes);
+
 // Basic route
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to REST API Task Manager' });
 });
-
-// To be added: Routes
-// app.use('/api/auth', authRoutes);
-// app.use('/api/tasks', taskRoutes);
 
 // 404 handler
 app.use((req, res, next) => {
@@ -29,10 +31,7 @@ app.use((req, res, next) => {
 });
 
 // Global error handler
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(err.status || 500).json(errorResponse(err.message || 'Internal Server Error'));
-});
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 
